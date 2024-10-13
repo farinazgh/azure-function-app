@@ -1,20 +1,25 @@
-package com.example;
+package com.example.push;
 
-import com.microsoft.azure.functions.annotation.*;
-import com.microsoft.azure.functions.*;
+import com.azure.data.tables.TableClient;
+import com.azure.data.tables.TableClientBuilder;
+import com.azure.data.tables.models.TableEntity;
+import com.azure.data.tables.models.TableServiceException;
+import com.azure.messaging.servicebus.ServiceBusClientBuilder;
+import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusSenderClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.azure.functions.ExecutionContext;
+import com.microsoft.azure.functions.annotation.EventGridTrigger;
+import com.microsoft.azure.functions.annotation.FunctionName;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-import com.azure.data.tables.*;
-import com.azure.data.tables.models.*;
-import com.azure.messaging.servicebus.*;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class FileUploadFunction {
-    // Configuration settings
+public class FileUploadFunctionTableStorage {
     private static final String STORAGE_CONNECTION_STRING = System.getenv("STORAGE_CONNECTION_STRING");
     private static final String SERVICE_BUS_CONNECTION_STRING = System.getenv("SERVICE_BUS_CONNECTION_STRING");
     private static final String SERVICE_BUS_QUEUE_NAME = System.getenv("SERVICE_BUS_QUEUE_NAME");

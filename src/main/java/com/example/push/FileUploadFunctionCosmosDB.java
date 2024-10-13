@@ -1,20 +1,24 @@
-package com.example;
+package com.example.push;
 
-import com.microsoft.azure.functions.annotation.*;
-import com.microsoft.azure.functions.*;
-
-import java.time.OffsetDateTime;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-
-import com.azure.data.tables.*;
-import com.azure.data.tables.models.*;
-import com.azure.core.util.Context;
-import com.azure.messaging.servicebus.*;
+import com.azure.data.tables.TableClient;
+import com.azure.data.tables.TableClientBuilder;
+import com.azure.data.tables.models.TableEntity;
+import com.azure.messaging.servicebus.ServiceBusClientBuilder;
+import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusSenderClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.azure.functions.ExecutionContext;
+import com.microsoft.azure.functions.annotation.EventGridTrigger;
+import com.microsoft.azure.functions.annotation.FunctionName;
 
-public class d1 {
+import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+//Won't use
+public class FileUploadFunctionCosmosDB {
     // Environment variables or configuration settings
     private static final String COSMOS_DB_CONNECTION_STRING = System.getenv("COSMOS_DB_CONNECTION_STRING");
     private static final String SERVICE_BUS_CONNECTION_STRING = System.getenv("SERVICE_BUS_CONNECTION_STRING");

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.pull;
 
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.core.util.Context;
